@@ -11,12 +11,7 @@ function print(text) {
  */
 function isValid(name) {
 
-  if (name == null || name.length < 4 || name.includes(' ')) {
-
-    return false;
-  }
-
-  return true;
+ ...
 }
 
 function sayHello() {
@@ -28,4 +23,3 @@ function sayHello() {
     print('Некорректное имя');
   }
 }
-
