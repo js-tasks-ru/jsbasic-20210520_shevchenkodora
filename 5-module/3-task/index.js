@@ -24,35 +24,46 @@ function initCarousel() {
   let offset = 0;
 
   if (offset === 0) {
-    carouselArrowLeft.style.display = 'none';
+
   }
 
   function clickRight() {
 
-    if (carouselArrowLeft.style.display === 'none') {
-      carouselArrowLeft.style.display = '';
-    }
     offset += imgFirstOffset;
-    if (offset >= (imgTotalWidth - imgFirstOffset)) {//offset = 0;
-      carouselArrowRight.style.display = 'none';
-    }
 
     //carouselInner.style.left = -offset + 'px'; - second variant
-
     carouselInner.style.transform = `translateX(${-offset}px)`;
+
+    checkBtns();
   }
 
   function clickLeft() {
 
-    if (offset === imgFirstOffset) {
-      carouselArrowLeft.style.display = 'none';
-    }
-    if (carouselArrowRight.style.display === 'none') {
+    offset -= imgFirstOffset;
+
+    // carouselInner.style.left = -offset + 'px'; - second variant
+    carouselInner.style.transform = `translateX(${-offset}px)`;
+
+    checkBtns();
+  }
+
+  function checkBtns() {
+
+    if (offset >= (imgTotalWidth - imgFirstOffset)) {
+      carouselArrowRight.style.display = 'none';
+    } else {
       carouselArrowRight.style.display = '';
     }
-    offset -= imgFirstOffset;
-    // carouselInner.style.left = -offset + 'px';
-    carouselInner.style.transform = `translateX(${-offset}px)`;
+
+    if (offset === 0) {
+      carouselArrowLeft.style.display = 'none';
+    } else {
+      carouselArrowLeft.style.display = '';
+
+    }
   }
+
+  checkBtns();
 }
+
 
