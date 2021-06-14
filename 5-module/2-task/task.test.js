@@ -22,8 +22,11 @@ describe('5-module-2-task', () => {
     textElement.remove();
   });
 
+
   it('после первого клика по кнопке текст должен исчезнуть', () => {
     let clickEvent = new MouseEvent('click', { bubbles: true });
+    console.log('Проверка' + textElement.hidden);
+
     buttonElement.dispatchEvent(clickEvent);
 
     expect(textElement.hidden).toBeTruthy();
@@ -32,8 +35,10 @@ describe('5-module-2-task', () => {
   it('после повторного клика по кнопке текст должен появиться', () => {
     let clickEvent = new MouseEvent('click', { bubbles: true });
     buttonElement.dispatchEvent(clickEvent);
+   console.log('Проверка' + textElement.hidden);
     buttonElement.dispatchEvent(clickEvent);
 
+console.log('Проверка' + textElement.hidden);
     expect(textElement.hidden).toBeFalsy();
   });
 });
