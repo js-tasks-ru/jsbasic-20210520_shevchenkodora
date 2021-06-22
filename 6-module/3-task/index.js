@@ -3,7 +3,8 @@ import createElement from '../../assets/lib/create-element.js';
 export default class Carousel {
   constructor(slides) {
     this.slides = slides;
-   this.createCarousel();
+    this.createCarousel();
+    this.initCarousel();
   }
 
   createCarousel() {
@@ -38,7 +39,7 @@ export default class Carousel {
 
       const carouselSlide = document.createElement("div");
       carouselSlide.className = "carousel__slide";
-      carouselSlide.dataset.id =key.id;
+      carouselSlide.dataset.id = key.id;
 
       const carouselImg = document.createElement("img");
       carouselImg.src = "/assets/images/carousel/" + key.image;
@@ -75,18 +76,19 @@ export default class Carousel {
       carouselSlide.appendChild(carouselImg);
       carouselInner.appendChild(carouselSlide);
       this.elem.appendChild(carouselInner);
-      return this.elem;
+
 
     }
-
+    return this.elem;
   }
+
   onClick(event) {
     //if (event.target.parentElement.className !== 'card__button')  - почему не проходят тесты с этой строкой?
     if (!event.target.closest('button.carousel__button')) {
       return;
     }
-let slide = event.target.closest('.carousel__slide').dataset;
-    const  productAddEvent = new CustomEvent('product-add', {detail: slide.id, bubbles: true,});
+    let slide = event.target.closest('.carousel__slide').dataset;
+    const productAddEvent = new CustomEvent('product-add', {detail: slide.id, bubbles: true,});
 
     this.elem.dispatchEvent(productAddEvent);
 
@@ -94,33 +96,39 @@ let slide = event.target.closest('.carousel__slide').dataset;
 
   initCarousel() {
 
-    const carouselInner = document.querySelector('.carousel__inner');
-    const carouselImg = document.querySelectorAll('.carousel__img');
+    const carouselInner = this.elem.querySelector('.carousel__inner');
+    const carouselImg = this.elem.querySelectorAll('.carousel__img');
 
-    // находим общую ширину слайдера и длинну
+    const carouselArrowRight = this.elem.querySelector('.carousel__arrow_right');
+    const carouselArrowLeft = this.elem.querySelector('.carousel__arrow_left');
 
+    let imgFirstOffset = 0;
     let imgTotalWidth = 0;
+    let offset = 0;
 
-    Array.from(carouselImg);
-    let imgFirstOffset = carouselImg[0].offsetWidth;
-
-    for (let item of carouselImg) {
-
-      imgTotalWidth += item.offsetWidth;
+    if (offset == 0) {
+      carouselArrowLeft.style.display = 'none';
     }
-
-    const carouselArrowRight = document.querySelector('.carousel__arrow_right');
-    const carouselArrowLeft = document.querySelector('.carousel__arrow_left');
+    ;
 
     carouselArrowRight.addEventListener('click', clickRight);
     carouselArrowLeft.addEventListener('click', clickLeft);
 
-    let offset = 0;
+    function calculateOffset() {
+
+      Array.from(carouselImg);
+      imgFirstOffset = carouselImg[0].offsetWidth;
+
+      for (let item of carouselImg) {
+        imgTotalWidth += item.offsetWidth;
+      }
+    }
 
     function clickRight() {
 
-      offset += imgFirstOffset;
+      if (offset == 0) calculateOffset();
 
+      offset += imgFirstOffset;
       carouselInner.style.transform = `translateX(${-offset}px)`;
 
       checkBtns();
@@ -129,7 +137,6 @@ let slide = event.target.closest('.carousel__slide').dataset;
     function clickLeft() {
 
       offset -= imgFirstOffset;
-
       carouselInner.style.transform = `translateX(${-offset}px)`;
 
       checkBtns();
@@ -150,6 +157,5 @@ let slide = event.target.closest('.carousel__slide').dataset;
       }
     }
 
-    checkBtns();
   }
 }
