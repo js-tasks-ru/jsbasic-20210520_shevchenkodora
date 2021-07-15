@@ -5,7 +5,7 @@ export default [
     "category": "salads",
     "image": "laab_kai_chicken_salad.png",
     "id": "laab-kai-chicken-salad",
-    "spiciness": 2
+    "spiciness": 2,
   },
   {
     "name": "Som tam papaya salad",

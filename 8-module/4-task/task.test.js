@@ -224,12 +224,15 @@ describe('8-module-4-task', () => {
 
           productId = products[0].id;
           let plusButton = document.querySelector(`[data-product-id="${productId}"] .cart-counter__button_plus`);
+          let count = document.querySelector(`[data-product-id="${productId}"] .cart-counter__count`);
+          console.log(count.textContent);
           plusButton.dispatchEvent(clickEvent);
+          //console.log(count.textContent);
         });
 
         it('должна отображать увеличение товара на единицу', () => {
           let count = document.querySelector(`[data-product-id="${productId}"] .cart-counter__count`);
-
+         // console.log(count.textContent);
           expect(count.textContent).toBe('2');
         });
 
@@ -267,6 +270,8 @@ describe('8-module-4-task', () => {
 
         it('должна отображать уменьшение товара на единицу', () => {
           let count = document.querySelector(`[data-product-id="${productId}"] .cart-counter__count`);
+console.log(count);
+console.log(productId);
 
           expect(count.textContent).toBe('3');
         });
