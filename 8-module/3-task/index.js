@@ -6,7 +6,7 @@ export default class Cart {
   }
 
   addProduct(product) {
-    if (product === '' || product === null) {
+    if (!product) {
       return;
     }
     let cartItem;
@@ -23,17 +23,15 @@ export default class Cart {
   updateProductCount(productId, amount) {
     let cartItem;
     this.cartItems.forEach((item, index) => {
-      if (item.product.id === productId) {
-        item.count += amount;
-        cartItem = this.cartItems[index];
+      if (item.product.id == productId) {
+        cartItem = item;
       }
-      if (item.count === 0) {
-
-        this.cartItems.splice(index, 1);
-      }
-      this.onProductUpdate(cartItem);
     });
-
+    cartItem.count += amount;
+    if (cartItem.count === 0) {
+      this.cartItems.splice(this.cartItems.indexOf(cartItem), 1);
+    }
+    this.onProductUpdate(cartItem);
   }
 
   isEmpty() {
@@ -54,7 +52,8 @@ export default class Cart {
     this.cartItems.forEach(item=> {
       totalPrice += item.count * item.product.price;
   })
-    return totalPrice;}
+    return totalPrice;
+  }
 
   onProductUpdate(cartItem) {
     // реализуем в следующей задаче

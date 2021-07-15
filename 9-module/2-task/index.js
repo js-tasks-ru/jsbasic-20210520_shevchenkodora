@@ -44,15 +44,14 @@ export default class Main {
 
 
 
-    document.body.addEventListener('slider-change', (event) => {
-      this.productGrid.updateFilter({maxSpiciness: this.stepSlider.value});
+    document.body.addEventListener('slider-change', ({ detail: value }) => {
+      this.productGrid.updateFilter({maxSpiciness: value});
     });
 
-    document.body.addEventListener('ribbon-select', (event) => {
+    document.body.addEventListener('ribbon-select', ({ detail: categoryId }) => {
       this.productGrid.updateFilter({
-        category: this.ribbon.category.id // категория из события 'ribbon-select'
-      });
-    });
+        category: categoryId
+      })});
 
     document.getElementById('nuts-checkbox').addEventListener('change', (event) => {
       this.productGrid.updateFilter({
@@ -61,7 +60,7 @@ export default class Main {
     });
 
 
-    document.getElementById('vegeterian-checkbox');
+    document.getElementById('vegeterian-checkbox').
     addEventListener('change', (event) => {
       this.productGrid.updateFilter({
         vegeterianOnly: event.target.checked, // новое значение чекбокса

@@ -13,18 +13,20 @@ export default class Cart {
   }
 
   addProduct(product) {
-    if (!product) {
-      return;
-    }
-    let cartItem;
-    let index = this.cartItems.indexOf(product);
-    if (index !== -1) {
-      this.cartItems[index].count ++;
-    } else {
-      cartItem = { product, count: 1};
+    let cartItem = this.cartItems.find(
+      item => item.product.id == product.id
+    );
+    if (!cartItem) {
+      cartItem = {
+        product,
+        count: 1
+      };
       this.cartItems.push(cartItem);
+    } else {
+      cartItem.count++;
     }
     this.onProductUpdate(cartItem);
+
   }
 
   updateProductCount(productId, amount) {
